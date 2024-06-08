@@ -6,8 +6,6 @@ window.addEventListener('scroll',() =>{
 
 }) 
 
-window.onload = 
-
 window.addEventListener('load', () => {
     AOS.init({
       duration: 800,
@@ -16,19 +14,13 @@ window.addEventListener('load', () => {
       mirror: false })
 })
 
-function Add(placeholder , val) {
-    if (val === 'name') {
-        inputHtml = `<input class="input-val" type="text" placeholder="Search By ${placeholder} . . ."></input>`
-    }
-    if (val === 'year') {
-        inputHtml = `<input class="input-val" type="number" placeholder="Search By ${placeholder} . . ."></input>`
-    }
+function Add(placeholder) {
     return `<div class="parent show col-12 col-md-6 col-lg-6 mx-auto my-5" data-aos="fade-up">
                 <div class="card shadow p-3">
                     <div class="wrap-input-18">
                         <div class="search">
                             <div>
-                                ${inputHtml}
+                                <input class="input-val" type="text" placeholder="Search By ${placeholder} . . ."></input>
                             </div>
                         </div>
                     </div>
@@ -48,12 +40,10 @@ function showFilmsSearch(obj) {
     }
     
     if (value === 'name') {
-        search.innerHTML += Add('Film Name' , 'name')
-    }
-    if (value === 'year') {
-        search.innerHTML += Add('Release Year' , 'year')
+        search.innerHTML += Add('Film Name')
     }
 }
+
 function invert() {
     fetch('/assets/netflix_titles.csv')
    .then(response => {
@@ -139,4 +129,3 @@ function K_NN(buttonId, type, result, suggestFilms, num) {
         })
     })
 }
-
