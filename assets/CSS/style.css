@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Merienda";
+    --red: #850903;
+    --main-red: #d65b54;
+    --white: #fffdf5;
+    --black: #02010e;
+    --gray: #24273f;
+    --light-gray: #5b6183;
+}
+/* body {
+    height: 1000px;
+} */
+/* Navbar */
+.navbar {
+    background-color: transparent;
+}
+.navbar.scroll{
+    background-color: var(--red);
+    backdrop-filter: blur(60px);
+}
+.navbar .navbar-brand img {
+    width: 180px;
+}
+/* Hero */
+.hero {
+    height: 100vh;
+    background-image: url(../imgs/hero.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.hero::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7)
+}
+.hero .container {
+    padding-top: 66.72px;
+    z-index: 1;
+}
+.hero .container .btn {
+    background-color: var(--red);
+    border-radius: 50px;
+    padding: 10px 25px;
+}
+/* main */
+main {
+    background-color: var(--main-red) ;
+}
+section {
+    overflow: hidden;
+}
+.show {
+    display: block;
+}
+.hide {
+    display: none;
+}
+.wrap-input-18 { 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+.wrap-input-18 .search {
+    margin: 20px;
+}
+.wrap-input-18 .search > div {
+    display: inline-block;
+    position: relative;
+}
+.wrap-input-18 .search > div:after {
+    content: "";
+    background: var(--red);
+    width: 4px;
+    height: 20px;
+    position: absolute;
+    top: 40px;
+    right: 2px;
+    transform: rotate(135deg);
+}
+.wrap-input-18 .search > div > input {
+    color: var(--red);
+    font-size: 16px;
+    background: transparent;
+    width: 25px;
+    height: 25px;
+    padding: 20px;
+    border: solid 3px var(--red);
+    outline: none;
+    border-radius: 35px;
+    transition: width 0.5s;
+}
+.wrap-input-18 .search > div > input::placeholder {
+    color: var(--red);
+    opacity: 0;
+    transition: opacity 150ms ease-out;
+}
+.wrap-input-18 .search > div > input:focus::placeholder {
+    opacity: 1;
+}
+.wrap-input-18 .search > div > input:focus,
+.wrap-input-18 .search > div > input:not(:placeholder-shown) {
+    width: 400px;
+}
+.fa-youtube {
+    font-size: 100px;
+}
+.suggest-films .card {
+    height: 400px;
+}
+/* footer */
+footer {
+    background-color: var(--red);
+}
+@media screen and (max-width:576px) {
+    .wrap-input-18 .search > div > input:focus,
+    .wrap-input-18 .search > div > input:not(:placeholder-shown) {
+        width: 250px;
+}
+}
