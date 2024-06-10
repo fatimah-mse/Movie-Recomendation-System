@@ -75,11 +75,13 @@ function Show(result) {
     let filmCards = document.querySelector('.film-cards')
     let suggestFilms = document.querySelector('.suggest-films')
     let inputVal = document.querySelector('.input-val').value.trim()
+    let id
     let type = ''
 
     if (inputVal!== '') {
         result.forEach(element => {
             if(element.title === inputVal) {
+                id = element.show_id
                 type = element.type
                 filmCards.innerHTML = `
                     <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up">
@@ -92,40 +94,46 @@ function Show(result) {
                             </div>
                         </div>
                     </div>`
-                    K_NN('myButton', type, result, suggestFilms , 10)
+                    K_NN('myButton', type, id , result, suggestFilms , 4)
             }
         })
     }
 }
 
-function K_NN(buttonId, type, result, suggestFilms, num) {
+
+function K_NN(buttonId, type, id, result, suggestFilms, num) {
     const button = document.querySelector(`#${buttonId}`)
 
     button.addEventListener('click', function () {
-        const calculateDistance = (item1, item2) => {
-            const item1Lower = item1.toLowerCase()
-            const item2Lower = item2.toLowerCase()
-            const distance = Math.abs(item1Lower.charCodeAt(0) - item2Lower.charCodeAt(0))
-            return distance === 0? 0 : distance
+        const calculateDistance = (word1, word2) => {
+            let w1 = parseInt(word1.substring(1))
+            let w2 = parseInt(word2.substring(1))
+            let distance = Math.abs(w1 - w2) 
+            return distance
         }
 
-        result.forEach((element, index) => {
-            if (index >= num) return
-            const distance = calculateDistance(element.type, type)
-            if (distance === 0) {
-                suggestFilms.innerHTML += `
-                    <div class="col-12 col-md-6 col-lg-4 my-3" data-aos="fade-up">
-                        <div class="card">
-                            <i class="fa-brands fa-youtube text-danger mx-auto my-3"></i>
-                            <div class="card-body d-flex flex-column justify-content-evenly">
-                                <h5 class="card-title text-center text-danger">${element.title}</h5>
-                                <p class="card-text text-center fw-bold">Type : ${element.type}</p>
-                                <p class="card-text text-center fw-bold">Distance = ${distance}</p>
-                                <p class="card-text text-center fw-bold">Rank = ${index}</p>
-                            </div>
+        const filteredResult = result.filter(element => element.type === type)
+
+        const distances = filteredResult.map((element) => ({
+            element,
+            distance: calculateDistance(element.show_id, id),
+        }))
+        distances.sort((a, b) => a.distance - b.distance)
+        const topResults = distances.slice(0, num).map(({ element }) => element)
+
+        topResults.forEach((element, index) => {
+            // if (index >= num) return
+            suggestFilms.innerHTML += `
+                <div class="col-12 col-md-6 col-lg-4 my-3" data-aos="fade-up">
+                    <div class="card">
+                        <i class="fa-brands fa-youtube text-danger mx-auto my-3"></i>
+                        <div class="card-body d-flex flex-column justify-content-evenly">
+                            <h5 class="card-title text-center text-danger">${element.title}</h5>
+                            <p class="card-text text-center fw-bold">Type : ${element.type}</p>
+                            <p class="card-text text-center fw-bold">Rank = ${index + 1}</p>
                         </div>
-                    </div>`
-            }
+                    </div>
+                </div>`
         })
     })
 }
